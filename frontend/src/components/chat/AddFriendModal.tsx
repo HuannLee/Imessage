@@ -54,6 +54,7 @@ const AddFriendModal = () => {
       }
     } catch (error) {
       console.error(error);
+      console.error("Lỗi API:", error);
       setIsFound(false);
     }
   });
@@ -80,10 +81,14 @@ const AddFriendModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex justify-center items-center size-5 rounded-full hover:bg-sidebar-accent cursor-pointer z-10">
-          <UserPlus className="size-4" />
+        {/* Nút tròn với icon kết bạn đồng bộ với nút CreateNewChat */}
+        <button 
+          className="flex items-center justify-center size-10 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all shadow-sm active:scale-95"
+          title="Thêm bạn bè"
+        >
+          <UserPlus className="size-5" />
           <span className="sr-only">Kết bạn</span>
-        </div>
+        </button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px] border-none">
@@ -91,31 +96,28 @@ const AddFriendModal = () => {
           <DialogTitle>Kết Bạn</DialogTitle>
         </DialogHeader>
 
+        {/* ... (giữ nguyên logic render SearchForm và SendFriendRequestForm bên dưới) */}
         {!isFound && (
-          <>
-            <SearchForm
-              register={register}
-              errors={errors}
-              usernameValue={usernameValue}
-              loading={loading}
-              isFound={isFound}
-              searchedUsername={searchedUsername}
-              onSubmit={handleSearch}
-              onCancel={handleCancel}
-            />
-          </>
+          <SearchForm
+            register={register}
+            errors={errors}
+            usernameValue={usernameValue}
+            loading={loading}
+            isFound={isFound}
+            searchedUsername={searchedUsername}
+            onSubmit={handleSearch}
+            onCancel={handleCancel}
+          />
         )}
 
         {isFound && (
-          <>
-            <SendFriendRequestForm
-              register={register}
-              loading={loading}
-              searchedUsername={searchedUsername}
-              onSubmit={handleSend}
-              onBack={() => setIsFound(null)}
-            />
-          </>
+          <SendFriendRequestForm
+            register={register}
+            loading={loading}
+            searchedUsername={searchedUsername}
+            onSubmit={handleSend}
+            onBack={() => setIsFound(null)}
+          />
         )}
       </DialogContent>
     </Dialog>

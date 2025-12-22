@@ -20,7 +20,7 @@
 
     /* Primary */
     /* Tím */
-    --primary: 271 79% 47%;
+    --primary:1 58% 63%;
     --primary-foreground: 210 40% 96.1%; /*slate-100*/
     /* Hồng */
     --primary-glow: 320 100% 70%;
@@ -38,9 +38,9 @@
     --accent-foreground: 240 100% 15%;
 
     /* Chat colors */
-    --chat-bubble-sent: 271 79% 47%;
+    --chat-bubble-sent: 1 58% 63%;
     --chat-bubble-sent-foreground: 0 0% 100%;
-    --chat-bubble-received: 0 0% 96%;
+    --chat-bubble-received: 0 0% 27%;
     --chat-bubble-received-foreground: 240 15% 15%;
 
     /* Status colors */
@@ -75,8 +75,8 @@
     );
     --gradient-chat: linear-gradient(
       135deg,
-      hsl(280, 100%, 65%),
-      hsl(320, 100%, 70%)
+    hsl(1, 58%, 73%),    
+    hsl(340, 65%, 80%)
     );
     --gradient-accent: linear-gradient(
       90deg,

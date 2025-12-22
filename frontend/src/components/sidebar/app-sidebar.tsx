@@ -3,104 +3,50 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupAction,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Moon, Sun } from "lucide-react";
-import { Switch } from "../ui/switch";
-import CreateNewChat from "../chat/CreateNewChat";
-import NewGroupChatModal from "../chat/NewGroupChatModal";
-import GroupChatList from "../chat/GroupChatList";
-import AddFriendModal from "../chat/AddFriendModal";
+import { LeftSidebar } from "./left-sidebar";
 import DirectMessageList from "../chat/DirectMessageList";
-import { useThemeStore } from "@/stores/useThemeStore";
 import { useAuthStore } from "@/stores/useAuthStore";
+import AddFriendModal from "../chat/AddFriendModal";
+import CreateNewChat from "../chat/CreateNewChat";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { isDark, toggleTheme } = useThemeStore();
+export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   const { user } = useAuthStore();
 
   return (
-    <Sidebar
-      variant="inset"
-      {...props}
-    >
-      {/* Header */}
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              size="lg"
-              asChild
-              className="bg-gradient-primary"
-            >
-              <a href="#">
-                <div className="flex w-full items-center px-2 justify-between">
-                  <h1 className="text-xl font-bold text-white">Moji</h1>
-                  <div className="flex items-center gap-2">
-                    <Sun className="size-4 text-white/80" />
-                    <Switch
-                      checked={isDark}
-                      onCheckedChange={toggleTheme}
-                      className="data-[state=checked]:bg-background/80"
-                    />
-                    <Moon className="size-4 text-white/80" />
-                  </div>
-                </div>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
+    <Sidebar variant="inset" {...props}>
+      <div className="flex h-full overflow-hidden"> 
+        {/* ===== LEFT ICON BAR ===== */}
+        <LeftSidebar />
 
-      {/* Content */}
-      <SidebarContent className="beautiful-scrollbar">
-        {/* New Chat */}
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <CreateNewChat />
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {/* ===== MAIN SIDEBAR ===== */}
+        <div className="flex flex-1 flex-col min-w-0">
+          
+        
+          <SidebarHeader className="border-b shrink-0"> 
+            <div className="flex items-center justify-between px-4 py-4">
+              <h2 className="font-bold text-xl tracking-tight whitespace-nowrap">
+                Đoạn chat
+              </h2>
+              
+              <div className="flex items-center gap-2 shrink-0">
+                <AddFriendModal />
+                <CreateNewChat />
+              </div>
+            </div>
+          </SidebarHeader>
 
-        {/* Group Chat */}
-        <SidebarGroup>
-          <SidebarGroupLabel className="uppercase">nhóm chat</SidebarGroupLabel>
-          <SidebarGroupAction
-            title="Tạo Nhóm"
-            className="cursor-pointer"
-          >
-            <NewGroupChatModal />
-          </SidebarGroupAction>
-
-          <SidebarGroupContent>
-            <GroupChatList />
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        {/* Dirrect Message */}
-        <SidebarGroup>
-          <SidebarGroupLabel className="uppercase">bạn bè</SidebarGroupLabel>
-          <SidebarGroupAction
-            title="Kết Bạn"
-            className="cursor-pointer"
-          >
-            <AddFriendModal />
-          </SidebarGroupAction>
-
-          <SidebarGroupContent>
+          {/* Phần nội dung list chat */}
+          <SidebarContent className="flex-1 overflow-y-auto beautiful-scrollbar">
             <DirectMessageList />
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
+          </SidebarContent>
 
-      {/* Footer */}
-      <SidebarFooter>{user && <NavUser user={user} />}</SidebarFooter>
+          <SidebarFooter className="shrink-0 border-t">
+            {user && <NavUser user={user} />}
+          </SidebarFooter>
+        </div>
+      </div>
     </Sidebar>
   );
 }
